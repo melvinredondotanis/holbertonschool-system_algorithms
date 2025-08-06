@@ -6,7 +6,7 @@ int graph_add_edge(graph_t *graph, const char *src, const char *dest,
 	edge_type_t type)
 {
 	vertex_t *src_vertex, *dest_vertex;
-	edge_t *new_edge;
+	edge_t *new_edge, *edge_ptr;
 
 	if (!graph || !src || !dest ||
 		(type != UNIDIRECTIONAL && type != BIDIRECTIONAL))
@@ -23,6 +23,15 @@ int graph_add_edge(graph_t *graph, const char *src, const char *dest,
 	if (!new_edge)
 		return (0);
 	new_edge->dest = dest_vertex;
+	if (src_vertex->edges == NULL)
+		src_vertex->edges = new_edge;
+	else
+	{
+		edge_ptr = src_vertex->edges;
+		while (edge_ptr->next)
+			edge_ptr = edge_ptr->next;
+		edge_ptr->next = new_edge;
+	}
 	if (type == BIDIRECTIONAL)
 	{
 		edge_t *reverse_edge = calloc(1, sizeof(edge_t));
@@ -33,10 +42,15 @@ int graph_add_edge(graph_t *graph, const char *src, const char *dest,
 			return (0);
 		}
 		reverse_edge->dest = src_vertex;
-		reverse_edge->next = dest_vertex->edges;
-		dest_vertex->edges = reverse_edge;
+		if (dest_vertex->edges == NULL)
+			dest_vertex->edges = reverse_edge;
+		else
+		{
+			edge_ptr = dest_vertex->edges;
+			while (edge_ptr->next)
+				edge_ptr = edge_ptr->next;
+			edge_ptr->next = reverse_edge;
+		}
 	}
-	new_edge->next = src_vertex->edges;
-	src_vertex->edges = new_edge;
 	return (1);
 }
