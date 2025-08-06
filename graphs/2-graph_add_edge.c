@@ -8,7 +8,8 @@ int graph_add_edge(graph_t *graph, const char *src, const char *dest,
 	vertex_t *src_vertex, *dest_vertex;
 	edge_t *new_edge;
 
-	if (!graph || !src || !dest)
+	if (!graph || !src || !dest ||
+		(type != UNIDIRECTIONAL && type != BIDIRECTIONAL))
 		return (0);
 	src_vertex = graph->vertices;
 	while (src_vertex && strcmp(src_vertex->content, src) != 0)
