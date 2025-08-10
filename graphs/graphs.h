@@ -1,7 +1,9 @@
 #ifndef GRAPHS_H
 #define GRAPHS_H
 
-#include <stddef.h>
+#include <stdlib.h>
+#include <stdio.h>
+#include <string.h>
 
 /**
  * enum edge_type_e - Enumerates the different types of
@@ -33,13 +35,13 @@ typedef struct edge_s
 } edge_t;
 
 /**
- * struct vertex_s - Node in the linked list of vertices in the adjacency list
+ * struct vertex_s - Node in the linked list of vertices in the adjency list
  *
- * @index: Index of the vertex in the adjacency list.
+ * @index: Index of the vertex in the adjency list.
  * @content: Custom data stored in the vertex (here, a string)
  * @nb_edges: Number of conenctions with other vertices in the graph
  * @edges: Pointer to the head node of the linked list of edges
- * @next: Pointer to the next vertex in the adjacency linked list
+ * @next: Pointer to the next vertex in the adgency linked list
  *   This pointer points to another vertex in the graph, but it
  *   doesn't stand for an edge between the two vertices
  */
@@ -54,10 +56,10 @@ struct vertex_s
 
 /**
  * struct graph_s - Representation of a graph
- * We use an adjacency linked list to represent our graph
+ * We use an adjency linked list to represent our graph
  *
  * @nb_vertices: Number of vertices in our graph
- * @vertices: Pointer to the head node of our adjacency linked list
+ * @vertices: Pointer to the head node of our adjency linked list
  */
 typedef struct graph_s
 {
@@ -65,10 +67,41 @@ typedef struct graph_s
 	vertex_t *vertices;
 } graph_t;
 
+/**
+ * struct Node - node for queue/stack
+ * @vertex: pointer to vertex
+ * @depth: depth of this vertex
+ * @next: pointer of next node in this list
+ */
+typedef struct Node
+{
+	vertex_t *vertex;
+	size_t depth;
+	struct Node *next;
+} node_t;
+
+/**
+ * struct Queue - queue object
+ * @head: pointer to head node
+ * @tail: pointer to tail node
+ * @size: size of queue
+ */
+typedef struct Queue
+{
+	node_t *head;
+	node_t *tail;
+	size_t size;
+} queue_t;
+
 void graph_display(const graph_t *graph);
 graph_t *graph_create(void);
 vertex_t *graph_add_vertex(graph_t *graph, const char *str);
 int graph_add_edge(graph_t *graph, const char *src, const char *dest,
-	edge_type_t type);
+				   edge_type_t type);
+void graph_delete(graph_t *graph);
+size_t depth_first_traverse(const graph_t *graph,
+							void (*action)(const vertex_t *v, size_t depth));
+size_t breadth_first_traverse(const graph_t *graph,
+							  void (*action)(const vertex_t *v, size_t depth));
 
-#endif /* GRAPHS_H */
+#endif
