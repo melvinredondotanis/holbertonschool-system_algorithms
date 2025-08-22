@@ -1,5 +1,5 @@
-#ifndef _HEAPY_H_
-#define _HEAPY_H_
+#ifndef _HEAP_H_
+#define _HEAP_H_
 
 #include <stddef.h>
 
@@ -35,4 +35,4 @@ typedef struct heap_s
 
 heap_t *heap_create(int (*data_cmp)(void *, void *));
 
-#endif /* _HEAPY_H_ */
+#endif /* _HEAP_H_ */
