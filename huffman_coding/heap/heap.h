@@ -1,7 +1,11 @@
-#ifndef _HEAP_H_
-#define _HEAP_H_
+#ifndef HEAP_H
+#define HEAP_H
 
-#include <stddef.h>
+#include <stdlib.h>
+#include <stdio.h>
+#include <string.h>
+
+#define ABS(x) ((x) >= 0 ? (x) : (-x))
 
 /**
  * struct binary_tree_node_s - Binary tree node data structure
@@ -36,4 +40,13 @@ typedef struct heap_s
 heap_t *heap_create(int (*data_cmp)(void *, void *));
 binary_tree_node_t *binary_tree_node(binary_tree_node_t *parent, void *data);
 
-#endif /* _HEAP_H_ */
+char *convert(long num, long base);
+binary_tree_node_t *heap_insert(heap_t *heap, void *data);
+
+void heapify_down(heap_t *heap);
+void *heap_extract(heap_t *heap);
+
+void recursively_free(binary_tree_node_t *root, void (*free_data)(void *));
+void heap_delete(heap_t *heap, void (*free_data)(void *));
+
+#endif

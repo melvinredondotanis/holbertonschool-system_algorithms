@@ -1,5 +1,4 @@
 #include "heap.h"
-#include <stdlib.h>
 
 /**
  * heap_create - allocates new heap structure
@@ -13,7 +12,6 @@ heap_t *heap_create(int (*data_cmp)(void *, void *))
 	heap = malloc(sizeof(*heap));
 	if (!heap)
 		return (NULL);
-
 	heap->root = NULL;
 	heap->size = 0;
 	heap->data_cmp = data_cmp;

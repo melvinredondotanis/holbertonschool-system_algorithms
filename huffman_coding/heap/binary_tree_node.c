@@ -1,5 +1,4 @@
 #include "heap.h"
-#include <stdlib.h>
 
 /**
  * binary_tree_node - creates new node in binary tree
@@ -9,12 +8,11 @@
  */
 binary_tree_node_t *binary_tree_node(binary_tree_node_t *parent, void *data)
 {
-	binary_tree_node_t *new_node = calloc(1, sizeof(*new_node));
+	binary_tree_node_t *node = calloc(1, sizeof(*node));
 
-	if (!new_node)
+	if (!node)
 		return (NULL);
-
-	new_node->parent = parent;
-	new_node->data = data;
-	return (new_node);
+	node->parent = parent;
+	node->data = data;
+	return (node);
 }
